@@ -1,0 +1,2877 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controlo Bancário</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 30px; }
+        .tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 20px; overflow-x: auto; }
+        .tab { padding: 10px 20px; cursor: pointer; border: none; background: none; font-size: 16px; font-weight: bold; color: #7f8c8d; transition: 0.3s; white-space: nowrap; }
+        .tab.active { color: #2980b9; border-bottom: 3px solid #2980b9; }
+        .tab:hover { color: #2980b9; }
+        .content { display: none; }
+        .content.active { display: block; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #2980b9; color: white; font-weight: 600; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        tr:hover { background-color: #f1f1f1; }
+        .header-row { background-color: #ecf0f1; font-weight: bold; color: #2c3e50; }
+        .total-row { background-color: #d5dbdb; font-weight: bold; }
+        .empty-row { height: 20px; background-color: transparent !important; border: none !important; }
+        .empty-row td { border: none !important; }
+        .footer { margin-top: 40px; text-align: center; font-size: 12px; color: #95a5a6; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Controlo Bancário — Dashboard</h1>
+    
+    <div class="tabs">
+        <button class="tab active" onclick="openTab(event, 'RESUMO GERAL')">RESUMO GERAL</button>
+        <button class="tab " onclick="openTab(event, 'BIM (Millennium)')">BIM (Millennium)</button>
+        <button class="tab " onclick="openTab(event, 'Moza Banco')">Moza Banco</button>
+        <button class="tab " onclick="openTab(event, 'BCI')">BCI</button>
+        <button class="tab " onclick="openTab(event, 'Millennium BIM 2')">Millennium BIM 2</button>
+        <button class="tab " onclick="openTab(event, 'Standard Bank')">Standard Bank</button>
+        <button class="tab " onclick="openTab(event, 'FNB')">FNB</button>
+        <button class="tab " onclick="openTab(event, 'Thembani Digital')">Thembani Digital</button>
+    </div>
+    <div id="RESUMO GERAL" class="content active">
+        <table>
+            <tr class="header-row">
+                <td>RESUMO GERAL — TODOS OS BANCOS</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr class="total-row">
+                <td>Banco</td>
+                <td>Total Entradas (MZN)</td>
+                <td>Total Saídas (MZN)</td>
+                <td>Saldo Final (MZN)</td>
+                <td>Estado</td>
+            </tr>
+            <tr>
+                <td>BIM (Millennium)</td>
+                <td>10.000,00</td>
+                <td>0,00</td>
+                <td>10.000,00</td>
+                <td>✅ Positivo</td>
+            </tr>
+            <tr>
+                <td>Moza Banco</td>
+                <td>5.000,00</td>
+                <td>0,00</td>
+                <td>5.000,00</td>
+                <td>✅ Positivo</td>
+            </tr>
+            <tr>
+                <td>BCI</td>
+                <td>30.000,00</td>
+                <td>0,00</td>
+                <td>30.000,00</td>
+                <td>✅ Positivo</td>
+            </tr>
+            <tr>
+                <td>Millennium BIM 2</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>⚠️ Zero</td>
+            </tr>
+            <tr>
+                <td>Standard Bank</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>⚠️ Zero</td>
+            </tr>
+            <tr>
+                <td>FNB</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>⚠️ Zero</td>
+            </tr>
+            <tr>
+                <td>Thembani Digital</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>⚠️ Zero</td>
+            </tr>
+        </table>
+    </div>
+    <div id="BIM (Millennium)" class="content ">
+        <table>
+            <tr class="header-row">
+                <td>CONTROLO BANCÁRIO — BIM (MILLENNIUM)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>DEPÓSITOS / ENTRADAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Depósito em Dinheiro</td>
+                <td>10.000,00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>10.000,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Recebida</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Outros Rendimentos</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL ENTRADAS</td>
+                <td>10.000,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>10.000,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>SAQUES / SAÍDAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Levantamento em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Enviada</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Pagamento de Serviços</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Outras Despesas</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL SAÍDAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>TRANSFERÊNCIAS ENTRE BANCOS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Transf. para Moza Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transf. para BCI</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Recebido de Outro Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr class="total-row">
+                <td>RESUMO DE SALDO (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Inicial</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Final</td>
+                <td>10.000,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>10.000,00</td>
+            </tr>
+        </table>
+    </div>
+    <div id="Moza Banco" class="content ">
+        <table>
+            <tr class="header-row">
+                <td>CONTROLO BANCÁRIO — MOZA BANCO</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>DEPÓSITOS / ENTRADAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Depósito em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Recebida</td>
+                <td>5.000,00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>5.000,00</td>
+            </tr>
+            <tr>
+                <td>Outros Rendimentos</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL ENTRADAS</td>
+                <td>5.000,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>5.000,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>SAQUES / SAÍDAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Levantamento em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Enviada</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Pagamento de Serviços</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Outras Despesas</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL SAÍDAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>TRANSFERÊNCIAS ENTRE BANCOS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Transf. para BIM (Millennium)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transf. para BCI</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Recebido de Outro Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr class="total-row">
+                <td>RESUMO DE SALDO (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Inicial</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Final</td>
+                <td>5.000,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>5.000,00</td>
+            </tr>
+        </table>
+    </div>
+    <div id="BCI" class="content ">
+        <table>
+            <tr class="header-row">
+                <td>CONTROLO BANCÁRIO — BCI</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>DEPÓSITOS / ENTRADAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Depósito em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Recebida</td>
+                <td>30.000,00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>30.000,00</td>
+            </tr>
+            <tr>
+                <td>Outros Rendimentos</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL ENTRADAS</td>
+                <td>30.000,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>30.000,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>SAQUES / SAÍDAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Levantamento em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Enviada</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Pagamento de Serviços</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Outras Despesas</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL SAÍDAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>TRANSFERÊNCIAS ENTRE BANCOS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Transf. para BIM (Millennium)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transf. para Moza Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Recebido de Outro Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr class="total-row">
+                <td>RESUMO DE SALDO (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Inicial</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Final</td>
+                <td>30.000,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>30.000,00</td>
+            </tr>
+        </table>
+    </div>
+    <div id="Millennium BIM 2" class="content ">
+        <table>
+            <tr class="header-row">
+                <td>CONTROLO BANCÁRIO — MILLENNIUM BIM 2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>DEPÓSITOS / ENTRADAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td></td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Depósito em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Recebida</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Outros Rendimentos</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL ENTRADAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>SAQUES / SAÍDAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td></td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Levantamento em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Enviada</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Pagamento de Serviços</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Outras Despesas</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL SAÍDAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>TRANSFERÊNCIAS ENTRE BANCOS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td></td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Transf. para BIM (Millennium)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transf. para Moza Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transf. para BCI</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Recebido de Outro Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL TRANSFERÊNCIAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr class="total-row">
+                <td>RESUMO DE SALDO (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Inicial</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Final</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+        </table>
+    </div>
+    <div id="Standard Bank" class="content ">
+        <table>
+            <tr class="header-row">
+                <td>CONTROLO BANCÁRIO — STANDARD BANK</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>DEPÓSITOS / ENTRADAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td></td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Depósito em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Recebida</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Outros Rendimentos</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL ENTRADAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>SAQUES / SAÍDAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td></td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Levantamento em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Enviada</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Pagamento de Serviços</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Outras Despesas</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL SAÍDAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>TRANSFERÊNCIAS ENTRE BANCOS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td></td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Transf. para BIM (Millennium)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transf. para Moza Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transf. para BCI</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Recebido de Outro Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL TRANSFERÊNCIAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr class="total-row">
+                <td>RESUMO DE SALDO (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Inicial</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Final</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+        </table>
+    </div>
+    <div id="FNB" class="content ">
+        <table>
+            <tr class="header-row">
+                <td>CONTROLO BANCÁRIO — FNB</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>DEPÓSITOS / ENTRADAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td></td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Depósito em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Recebida</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Outros Rendimentos</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL ENTRADAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>SAQUES / SAÍDAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td></td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Levantamento em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Enviada</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Pagamento de Serviços</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Outras Despesas</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL SAÍDAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>TRANSFERÊNCIAS ENTRE BANCOS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td></td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Transf. para BIM (Millennium)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transf. para Moza Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transf. para BCI</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Recebido de Outro Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL TRANSFERÊNCIAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr class="total-row">
+                <td>RESUMO DE SALDO (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Inicial</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Final</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+        </table>
+    </div>
+    <div id="Thembani Digital" class="content ">
+        <table>
+            <tr class="header-row">
+                <td>CONTROLO BANCÁRIO — THEMBANI DIGITAL</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>DEPÓSITOS / ENTRADAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td></td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Depósito em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Recebida</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Outros Rendimentos</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL ENTRADAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>SAQUES / SAÍDAS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td></td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Levantamento em Dinheiro</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transferência Enviada</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Pagamento de Serviços</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Outras Despesas</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL SAÍDAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr>
+                <td>TRANSFERÊNCIAS ENTRE BANCOS (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Descrição</td>
+                <td>Jan</td>
+                <td>Fev</td>
+                <td>Mar</td>
+                <td>Abr</td>
+                <td>Mai</td>
+                <td>Jun</td>
+                <td>Jul</td>
+                <td>Ago</td>
+                <td>Set</td>
+                <td>Out</td>
+                <td>Nov</td>
+                <td>Dez</td>
+                <td></td>
+                <td>TOTAL</td>
+            </tr>
+            <tr>
+                <td>Transf. para BIM (Millennium)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transf. para Moza Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Transf. para BCI</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr>
+                <td>Recebido de Outro Banco</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL TRANSFERÊNCIAS</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="empty-row"><td colspan="15"></td></tr>
+            <tr class="total-row">
+                <td>RESUMO DE SALDO (MZN)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Inicial</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="total-row">
+                <td>Saldo Final</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        Gerado automaticamente para Controlo Bancário &copy; 2026
+    </div>
+</div>
+
+<script>
+    function openTab(evt, sheetName) {
+        var i, content, tabs;
+        content = document.getElementsByClassName("content");
+        for (i = 0; i < content.length; i++) {
+            content[i].style.display = "none";
+            content[i].classList.remove("active");
+        }
+        tabs = document.getElementsByClassName("tab");
+        for (i = 0; i < tabs.length; i++) {
+            tabs[i].className = tabs[i].className.replace(" active", "");
+        }
+        document.getElementById(sheetName).style.display = "block";
+        document.getElementById(sheetName).classList.add("active");
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+</body>
+</html>
