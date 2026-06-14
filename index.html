@@ -127,7 +127,7 @@ function buildResumoPage() {
   BANKS.forEach((b, bi) => {
     h += `<tr><td>${b}</td><td id="re_${bi}">-</td><td id="rs_${bi}">-</td><td id="rsf_${bi}">-</td><td id="rest_${bi}">-</td></tr>`;
   });
-  h += `<tr class="total"><td>TOTAL GERAL</td><td id="rge">-</td><td id="rgs">-</td><td id="rgsf">-</td><td></td></tr>`;
+
   h += `</tbody></table></div>`;
   return h;
 }
@@ -182,10 +182,7 @@ function refreshResumo() {
       : sf<0 ? '<span class="badge neg">❌ Negativo</span>'
       : '<span class="badge zero">⚠️ Zero</span>';
   });
-  const ge=document.getElementById('rge'),gs=document.getElementById('rgs'),gsf=document.getElementById('rgsf');
-  if(ge) ge.textContent=fmt(grandE);
-  if(gs) gs.textContent=fmt(grandS);
-  if(gsf) gsf.textContent=fmt(grandSF);
+
 }
 
 // Build DOM
