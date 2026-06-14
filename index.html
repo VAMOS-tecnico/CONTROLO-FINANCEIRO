@@ -4,13 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Controlo Bancário</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,sans-serif;background:#f5f5f3;color:#1a1a18;min-height:100vh;padding:1.5rem}
 h1{font-size:20px;font-weight:500;margin-bottom:1.25rem;color:#1a1a18}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
-.tab{padding:6px 14px;border-radius:8px;border:0.5px solid #c8c6bc;background:#fff;cursor:pointer;font-size:13px;color:#5f5e5a;transition:all .15s}
+.tab{padding:6px 14px;border-radius:8px;border:1px solid #c8c6bc;background:#fff;cursor:pointer;font-size:13px;color:#5f5e5a;transition:all .15s}
 .tab.active{background:#e6f1fb;color:#185fa5;border-color:#85b7eb;font-weight:500}
 .tab:hover:not(.active){background:#f1efe8}
 .page{display:none}.page.active{display:block}
@@ -21,27 +20,27 @@ h1{font-size:20px;font-weight:500;margin-bottom:1.25rem;color:#1a1a18}
 .metric-value{font-size:20px;font-weight:500;color:#1a1a18}
 .metric-value.green{color:#3b6d11}
 .metric-value.red{color:#a32d2d}
-.card{background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
-th{background:#f1efe8;color:#5f5e5a;padding:6px 8px;text-align:right;font-weight:500;border-bottom:0.5px solid #d3d1c7}
-th:first-child{text-align:left;width:160px}
-td{padding:5px 8px;text-align:right;border-bottom:0.5px solid #d3d1c7;color:#1a1a18}
-td:first-child{text-align:left;color:#5f5e5a}
-tr.total td{font-weight:500;background:#f1efe8;color:#1a1a18}
+.card{background:#fff;border:1px solid #d3d1c7;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#f1efe8;color:#5f5e5a;padding:6px 8px;text-align:right;font-weight:500;border-bottom:1px solid #d3d1c7;white-space:nowrap}
+th:first-child{text-align:left;min-width:150px}
+td{padding:4px 6px;text-align:right;border-bottom:1px solid #eee;color:#1a1a18;white-space:nowrap}
+td:first-child{text-align:left;color:#5f5e5a;min-width:150px}
+tr.total td{font-weight:600;background:#f1efe8;color:#1a1a18}
 tr.total td:first-child{color:#1a1a18}
-input[type=number]{width:100%;text-align:right;background:transparent;border:none;font-size:12px;color:#185fa5;font-family:inherit;padding:2px 0}
-input[type=number]:focus{outline:none;background:#e6f1fb;border-radius:3px}
-input[type=number]::-webkit-inner-spin-button{opacity:0}
+.cell-input{width:72px;text-align:right;background:#fff;border:1px solid #c8c6bc;border-radius:4px;font-size:12px;color:#185fa5;font-family:inherit;padding:3px 5px;display:block}
+.cell-input:focus{outline:none;border-color:#85b7eb;background:#e6f1fb}
 .resumo-table{width:100%;border-collapse:collapse;font-size:13px}
-.resumo-table th{background:#f1efe8;padding:8px 12px;text-align:right;font-weight:500;color:#5f5e5a;border-bottom:0.5px solid #d3d1c7}
+.resumo-table th{background:#f1efe8;padding:8px 12px;text-align:right;font-weight:500;color:#5f5e5a;border-bottom:1px solid #d3d1c7}
 .resumo-table th:first-child{text-align:left}
-.resumo-table td{padding:8px 12px;text-align:right;border-bottom:0.5px solid #d3d1c7;color:#1a1a18}
+.resumo-table td{padding:8px 12px;text-align:right;border-bottom:1px solid #eee;color:#1a1a18}
 .resumo-table td:first-child{text-align:left;font-weight:500}
+.resumo-table tr.total td{font-weight:600;background:#f1efe8}
 .badge{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:500}
 .badge.pos{background:#eaf3de;color:#3b6d11}
 .badge.neg{background:#fcebeb;color:#a32d2d}
 .badge.zero{background:#faeeda;color:#854f0b}
-@media(max-width:600px){th:first-child{width:110px}th,td{padding:4px 5px;font-size:11px}}
+@media(max-width:600px){th:first-child,td:first-child{min-width:100px}.cell-input{width:58px}}
 </style>
 </head>
 <body>
@@ -55,164 +54,181 @@ const BANKS=['BIM (Millennium)','Millennium BIM 2','Moza Banco','BCI','Standard 
 const ENTRADA_ROWS=['Depósito em Dinheiro','Transferência Recebida','Outros Rendimentos'];
 const SAIDA_ROWS=['Levantamento em Dinheiro','Transferência Enviada','Pagamento de Serviços','Outras Despesas'];
 
-function fmt(n){if(!n||n===0)return '-';return n.toLocaleString('pt-MZ',{minimumFractionDigits:0,maximumFractionDigits:0});}
+// state[bankIdx][section][rowIdx][monthIdx]
+const state = BANKS.map(() => ({
+  entradas: ENTRADA_ROWS.map(() => Array(12).fill(0)),
+  saidas:   SAIDA_ROWS.map(()   => Array(12).fill(0))
+}));
 
-const state={};
-BANKS.forEach(b=>{
-  state[b]={entradas:{},saidas:{},saldo_inicial:Array(12).fill(0)};
-  ENTRADA_ROWS.forEach(r=>{state[b].entradas[r]=Array(12).fill(0);});
-  SAIDA_ROWS.forEach(r=>{state[b].saidas[r]=Array(12).fill(0);});
-});
-state['BIM (Millennium)'].entradas['Depósito em Dinheiro'][0]=10000;
-state['Moza Banco'].entradas['Transferência Recebida'][0]=5000;
-state['BCI'].entradas['Transferência Recebida'][0]=30000;
+// Seed initial values
+state[0].entradas[0][0] = 10000; // BIM Jan depósito
+state[2].entradas[1][0] = 5000;  // Moza Banco Jan transf
+state[3].entradas[1][0] = 30000; // BCI Jan transf
 
-function getEntradasTotal(bank,m){return ENTRADA_ROWS.reduce((s,r)=>s+state[bank].entradas[r][m],0);}
-function getSaidasTotal(bank,m){return SAIDA_ROWS.reduce((s,r)=>s+state[bank].saidas[r][m],0);}
-function getSaldoFinal(bank,m){return(state[bank].saldo_inicial[m]||0)+getEntradasTotal(bank,m)-getSaidasTotal(bank,m);}
-function getTotalEntradas(bank){return MONTHS.reduce((_,__,m)=>_+getEntradasTotal(bank,m),0);}
-function getTotalSaidas(bank){return MONTHS.reduce((_,__,m)=>_+getSaidasTotal(bank,m),0);}
-function getSaldoFinalTotal(bank){return getSaldoFinal(bank,11);}
-
-function buildMonthTable(rows,section,bank){
-  let html=`<table><thead><tr><th>Descrição</th>`;
-  MONTHS.forEach(m=>html+=`<th>${m}</th>`);
-  html+=`<th>Total</th></tr></thead><tbody>`;
-  rows.forEach(row=>{
-    html+=`<tr><td>${row}</td>`;
-    MONTHS.forEach((_,mi)=>{
-      const val=section==='entradas'?state[bank].entradas[row][mi]:state[bank].saidas[row][mi];
-      html+=`<td><input type="number" min="0" step="100" value="${val||''}" placeholder="0" data-bank="${bank}" data-section="${section}" data-row="${row}" data-month="${mi}" oninput="updateVal(this)"></td>`;
-    });
-    const total=section==='entradas'?MONTHS.reduce((_,__,mi)=>_+state[bank].entradas[row][mi],0):MONTHS.reduce((_,__,mi)=>_+state[bank].saidas[row][mi],0);
-    html+=`<td id="rt-${bank}-${section}-${row.replace(/\s/g,'_')}">${fmt(total)}</td></tr>`;
-  });
-  html+=`<tr class="total"><td>TOTAL</td>`;
-  MONTHS.forEach((_,mi)=>{
-    const t=section==='entradas'?getEntradasTotal(bank,mi):getSaidasTotal(bank,mi);
-    html+=`<td id="ct-${bank}-${section}-${mi}">${fmt(t)}</td>`;
-  });
-  const grand=section==='entradas'?getTotalEntradas(bank):getTotalSaidas(bank);
-  html+=`<td id="gt-${bank}-${section}">${fmt(grand)}</td></tr></tbody></table>`;
-  return html;
+function fmt(n) {
+  if (!n || n === 0) return '-';
+  return n.toLocaleString('pt-MZ', {minimumFractionDigits:0, maximumFractionDigits:0});
 }
 
-function buildBankPage(bank){
-  const te=getTotalEntradas(bank),ts=getTotalSaidas(bank),sf=getSaldoFinalTotal(bank);
+function sumEntradas(bi, mi) { return state[bi].entradas.reduce((s,r) => s + r[mi], 0); }
+function sumSaidas(bi, mi)   { return state[bi].saidas.reduce((s,r)   => s + r[mi], 0); }
+function saldoFinal(bi, mi)  { return sumEntradas(bi,mi) - sumSaidas(bi,mi); }
+function totalEntradasBank(bi){ return MONTHS.reduce((_,__,m)=>_+sumEntradas(bi,m),0); }
+function totalSaidasBank(bi)  { return MONTHS.reduce((_,__,m)=>_+sumSaidas(bi,m),0); }
+function saldoFinalTotal(bi)  { return MONTHS.reduce((_,__,m)=>_+saldoFinal(bi,m),0); }
+
+function makeId(bi, sec, ri, mi) { return `c_${bi}_${sec}_${ri}_${mi}`; }
+
+function buildMonthTable(bi, sec, rows) {
+  let h = `<table><thead><tr><th>Descrição</th>`;
+  MONTHS.forEach(m => h += `<th>${m}</th>`);
+  h += `<th>Total</th></tr></thead><tbody>`;
+
+  rows.forEach((row, ri) => {
+    h += `<tr><td>${row}</td>`;
+    MONTHS.forEach((_, mi) => {
+      const id = makeId(bi, sec, ri, mi);
+      const val = state[bi][sec][ri][mi];
+      h += `<td><input class="cell-input" id="${id}" type="text" inputmode="numeric" value="${val || ''}" placeholder="0"></td>`;
+    });
+    h += `<td id="rt_${bi}_${sec}_${ri}">-</td></tr>`;
+  });
+
+  h += `<tr class="total"><td>TOTAL</td>`;
+  MONTHS.forEach((_, mi) => h += `<td id="ct_${bi}_${sec}_${mi}">-</td>`);
+  h += `<td id="gt_${bi}_${sec}">-</td></tr></tbody></table>`;
+  return h;
+}
+
+function buildBankPage(bi) {
   return `
   <div class="grid">
-    <div class="metric"><div class="metric-label">Total Entradas</div><div class="metric-value green" id="m-e-${bank}">${fmt(te)} MZN</div></div>
-    <div class="metric"><div class="metric-label">Total Saídas</div><div class="metric-value red" id="m-s-${bank}">${fmt(ts)} MZN</div></div>
-    <div class="metric"><div class="metric-label">Saldo Final</div><div class="metric-value ${sf>=0?'green':'red'}" id="m-sf-${bank}">${fmt(sf)} MZN</div></div>
+    <div class="metric"><div class="metric-label">Total Entradas</div><div class="metric-value green" id="me_${bi}">-</div></div>
+    <div class="metric"><div class="metric-label">Total Saídas</div><div class="metric-value red" id="ms_${bi}">-</div></div>
+    <div class="metric"><div class="metric-label">Saldo Final</div><div class="metric-value green" id="msf_${bi}">-</div></div>
   </div>
   <p class="section-title">Depósitos / Entradas (MZN)</p>
-  <div class="card">${buildMonthTable(ENTRADA_ROWS,'entradas',bank)}</div>
+  <div class="card">${buildMonthTable(bi, 'entradas', ENTRADA_ROWS)}</div>
   <p class="section-title">Saques / Saídas (MZN)</p>
-  <div class="card">${buildMonthTable(SAIDA_ROWS,'saidas',bank)}</div>
+  <div class="card">${buildMonthTable(bi, 'saidas', SAIDA_ROWS)}</div>
   <p class="section-title">Resumo de Saldo (MZN)</p>
   <div class="card">
     <table><thead><tr><th>Saldo</th>${MONTHS.map(m=>`<th>${m}</th>`).join('')}<th>Total</th></tr></thead>
-    <tbody>
-    <tr class="total"><td>Saldo Final</td>${MONTHS.map((_,mi)=>`<td id="sf-${bank}-${mi}">${fmt(getSaldoFinal(bank,mi))}</td>`).join('')}<td id="sf-${bank}-total">${fmt(sf)}</td></tr>
-    </tbody></table>
+    <tbody><tr class="total"><td>Saldo Final</td>
+    ${MONTHS.map((_,mi)=>`<td id="sf_${bi}_${mi}">-</td>`).join('')}
+    <td id="sft_${bi}">-</td></tr></tbody></table>
   </div>`;
 }
 
-function buildResumoPage(){
-  let html=`<div class="card"><table class="resumo-table"><thead><tr><th>Banco</th><th>Total Entradas (MZN)</th><th>Total Saídas (MZN)</th><th>Saldo Final (MZN)</th><th>Estado</th></tr></thead><tbody>`;
-  BANKS.forEach(b=>{
-    const te=getTotalEntradas(b),ts=getTotalSaidas(b),sf=getSaldoFinalTotal(b);
-    const estado=sf>0?'<span class="badge pos">✅ Positivo</span>':sf<0?'<span class="badge neg">❌ Negativo</span>':'<span class="badge zero">⚠️ Zero</span>';
-    html+=`<tr><td>${b}</td><td id="r-e-${b.replace(/[\s()]/g,'_')}">${fmt(te)}</td><td id="r-s-${b.replace(/[\s()]/g,'_')}">${fmt(ts)}</td><td id="r-sf-${b.replace(/[\s()]/g,'_')}">${fmt(sf)}</td><td>${estado}</td></tr>`;
+function buildResumoPage() {
+  let h = `<div class="card"><table class="resumo-table"><thead><tr>
+    <th>Banco</th><th>Total Entradas (MZN)</th><th>Total Saídas (MZN)</th><th>Saldo Final (MZN)</th><th>Estado</th>
+  </tr></thead><tbody>`;
+  BANKS.forEach((b, bi) => {
+    h += `<tr><td>${b}</td><td id="re_${bi}">-</td><td id="rs_${bi}">-</td><td id="rsf_${bi}">-</td><td id="rest_${bi}">-</td></tr>`;
   });
-  const grandE=BANKS.reduce((s,b)=>s+getTotalEntradas(b),0);
-  const grandS=BANKS.reduce((s,b)=>s+getTotalSaidas(b),0);
-  const grandSF=BANKS.reduce((s,b)=>s+getSaldoFinalTotal(b),0);
-  html+=`<tr class="total"><td>TOTAL GERAL</td><td id="r-ge">${fmt(grandE)}</td><td id="r-gs">${fmt(grandS)}</td><td id="r-gsf">${fmt(grandSF)}</td><td></td></tr>`;
-  html+=`</tbody></table></div>`;
-  return html;
+  h += `<tr class="total"><td>TOTAL GERAL</td><td id="rge">-</td><td id="rgs">-</td><td id="rgsf">-</td><td></td></tr>`;
+  h += `</tbody></table></div>`;
+  return h;
 }
 
-function updateVal(el){
-  const{bank,section,row,month}=el.dataset;
-  const val=parseFloat(el.value)||0;
-  if(section==='entradas')state[bank].entradas[row][parseInt(month)]=val;
-  else state[bank].saidas[row][parseInt(month)]=val;
-  refreshPage(bank);refreshResumo();
+function refreshBank(bi) {
+  // Row totals
+  ['entradas','saidas'].forEach(sec => {
+    const rows = sec === 'entradas' ? ENTRADA_ROWS : SAIDA_ROWS;
+    rows.forEach((_, ri) => {
+      const t = state[bi][sec][ri].reduce((s,v)=>s+v,0);
+      const el = document.getElementById(`rt_${bi}_${sec}_${ri}`);
+      if (el) el.textContent = fmt(t);
+    });
+    MONTHS.forEach((_,mi) => {
+      const t = sec === 'entradas' ? sumEntradas(bi,mi) : sumSaidas(bi,mi);
+      const el = document.getElementById(`ct_${bi}_${sec}_${mi}`);
+      if (el) el.textContent = fmt(t);
+    });
+    const grand = sec === 'entradas' ? totalEntradasBank(bi) : totalSaidasBank(bi);
+    const el = document.getElementById(`gt_${bi}_${sec}`);
+    if (el) el.textContent = fmt(grand);
+  });
+  MONTHS.forEach((_,mi) => {
+    const el = document.getElementById(`sf_${bi}_${mi}`);
+    if (el) el.textContent = fmt(saldoFinal(bi,mi));
+  });
+  const te = totalEntradasBank(bi), ts = totalSaidasBank(bi), sf = saldoFinalTotal(bi);
+  const sfte = document.getElementById(`sft_${bi}`);
+  if (sfte) sfte.textContent = fmt(sf);
+  const me = document.getElementById(`me_${bi}`);
+  const ms = document.getElementById(`ms_${bi}`);
+  const msf = document.getElementById(`msf_${bi}`);
+  if (me) me.textContent = fmt(te) + ' MZN';
+  if (ms) ms.textContent = fmt(ts) + ' MZN';
+  if (msf) { msf.textContent = fmt(sf) + ' MZN'; msf.className = 'metric-value ' + (sf >= 0 ? 'green' : 'red'); }
 }
 
-function refreshPage(bank){
-  ENTRADA_ROWS.forEach(row=>{
-    const t=MONTHS.reduce((_,__,mi)=>_+state[bank].entradas[row][mi],0);
-    const el=document.getElementById(`rt-${bank}-entradas-${row.replace(/\s/g,'_')}`);
-    if(el)el.textContent=fmt(t);
+function refreshResumo() {
+  let grandE=0, grandS=0, grandSF=0;
+  BANKS.forEach((_, bi) => {
+    const te=totalEntradasBank(bi), ts=totalSaidasBank(bi), sf=saldoFinalTotal(bi);
+    grandE+=te; grandS+=ts; grandSF+=sf;
+    const el_e=document.getElementById(`re_${bi}`);
+    const el_s=document.getElementById(`rs_${bi}`);
+    const el_sf=document.getElementById(`rsf_${bi}`);
+    const el_st=document.getElementById(`rest_${bi}`);
+    if(el_e) el_e.textContent=fmt(te);
+    if(el_s) el_s.textContent=fmt(ts);
+    if(el_sf) el_sf.textContent=fmt(sf);
+    if(el_st) el_st.innerHTML = sf>0
+      ? '<span class="badge pos">✅ Positivo</span>'
+      : sf<0 ? '<span class="badge neg">❌ Negativo</span>'
+      : '<span class="badge zero">⚠️ Zero</span>';
   });
-  SAIDA_ROWS.forEach(row=>{
-    const t=MONTHS.reduce((_,__,mi)=>_+state[bank].saidas[row][mi],0);
-    const el=document.getElementById(`rt-${bank}-saidas-${row.replace(/\s/g,'_')}`);
-    if(el)el.textContent=fmt(t);
-  });
-  MONTHS.forEach((_,mi)=>{
-    const ce=document.getElementById(`ct-${bank}-entradas-${mi}`);
-    const cs=document.getElementById(`ct-${bank}-saidas-${mi}`);
-    const sf=document.getElementById(`sf-${bank}-${mi}`);
-    if(ce)ce.textContent=fmt(getEntradasTotal(bank,mi));
-    if(cs)cs.textContent=fmt(getSaidasTotal(bank,mi));
-    if(sf)sf.textContent=fmt(getSaldoFinal(bank,mi));
-  });
-  const gte=document.getElementById(`gt-${bank}-entradas`);
-  const gts=document.getElementById(`gt-${bank}-saidas`);
-  const sfTotal=document.getElementById(`sf-${bank}-total`);
-  const te=getTotalEntradas(bank),ts=getTotalSaidas(bank),sf2=getSaldoFinalTotal(bank);
-  if(gte)gte.textContent=fmt(te);
-  if(gts)gts.textContent=fmt(ts);
-  if(sfTotal)sfTotal.textContent=fmt(sf2);
-  const me=document.getElementById(`m-e-${bank}`);
-  const ms=document.getElementById(`m-s-${bank}`);
-  const msf=document.getElementById(`m-sf-${bank}`);
-  if(me){me.textContent=fmt(te)+' MZN';me.className='metric-value green';}
-  if(ms){ms.textContent=fmt(ts)+' MZN';ms.className='metric-value red';}
-  if(msf){msf.textContent=fmt(sf2)+' MZN';msf.className='metric-value '+(sf2>=0?'green':'red');}
+  const ge=document.getElementById('rge'),gs=document.getElementById('rgs'),gsf=document.getElementById('rgsf');
+  if(ge) ge.textContent=fmt(grandE);
+  if(gs) gs.textContent=fmt(grandS);
+  if(gsf) gsf.textContent=fmt(grandSF);
 }
 
-function refreshResumo(){
-  BANKS.forEach(b=>{
-    const key=b.replace(/[\s()]/g,'_');
-    const te=getTotalEntradas(b),ts=getTotalSaidas(b),sf=getSaldoFinalTotal(b);
-    const re=document.getElementById(`r-e-${key}`);
-    const rs=document.getElementById(`r-s-${key}`);
-    const rsf=document.getElementById(`r-sf-${key}`);
-    if(re)re.textContent=fmt(te);
-    if(rs)rs.textContent=fmt(ts);
-    if(rsf)rsf.textContent=fmt(sf);
-  });
-  const grandE=BANKS.reduce((s,b)=>s+getTotalEntradas(b),0);
-  const grandS=BANKS.reduce((s,b)=>s+getTotalSaidas(b),0);
-  const grandSF=BANKS.reduce((s,b)=>s+getSaldoFinalTotal(b),0);
-  const ge=document.getElementById('r-ge'),gs=document.getElementById('r-gs'),gsf=document.getElementById('r-gsf');
-  if(ge)ge.textContent=fmt(grandE);
-  if(gs)gs.textContent=fmt(grandS);
-  if(gsf)gsf.textContent=fmt(grandSF);
-}
-
-const tabsEl=document.getElementById('tabs');
-const pagesEl=document.getElementById('pages');
-
-let thtml=`<button class="tab active" onclick="switchTab('resumo',this)">Resumo Geral</button>`;
-let phtml=`<div class="page active" id="page-resumo">${buildResumoPage()}</div>`;
-BANKS.forEach(b=>{
-  const id='page-'+b.replace(/[\s()]/g,'_');
-  thtml+=`<button class="tab" onclick="switchTab('${b.replace(/[\s()]/g,'_')}',this)">${b}</button>`;
-  phtml+=`<div class="page" id="${id}">${buildBankPage(b)}</div>`;
+// Build DOM
+const tabsEl = document.getElementById('tabs');
+const pagesEl = document.getElementById('pages');
+let thtml = `<button class="tab active" onclick="switchTab('resumo',this)">Resumo Geral</button>`;
+let phtml = `<div class="page active" id="page_resumo">${buildResumoPage()}</div>`;
+BANKS.forEach((b, bi) => {
+  thtml += `<button class="tab" onclick="switchTab('b${bi}',this)">${b}</button>`;
+  phtml += `<div class="page" id="page_b${bi}">${buildBankPage(bi)}</div>`;
 });
-tabsEl.innerHTML=thtml;
-pagesEl.innerHTML=phtml;
+tabsEl.innerHTML = thtml;
+pagesEl.innerHTML = phtml;
 
-function switchTab(id,btn){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+// Attach input listeners after DOM is built
+BANKS.forEach((_, bi) => {
+  ['entradas','saidas'].forEach(sec => {
+    const rows = sec === 'entradas' ? ENTRADA_ROWS : SAIDA_ROWS;
+    rows.forEach((_, ri) => {
+      MONTHS.forEach((_, mi) => {
+        const el = document.getElementById(makeId(bi, sec, ri, mi));
+        if (!el) return;
+        el.addEventListener('input', function() {
+          const v = parseFloat(this.value.replace(/[^\d.-]/g,'')) || 0;
+          state[bi][sec][ri][mi] = v;
+          refreshBank(bi);
+          refreshResumo();
+        });
+        el.addEventListener('focus', function() { this.select(); });
+      });
+    });
+  });
+});
+
+// Initial render
+BANKS.forEach((_, bi) => refreshBank(bi));
+refreshResumo();
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('page_' + id).classList.add('active');
 }
 </script>
 </body>
