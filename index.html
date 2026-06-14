@@ -6,47 +6,65 @@
 <title>Controlo Bancário</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,sans-serif;background:#f5f5f3;color:#1a1a18;min-height:100vh;padding:1.5rem}
-h1{font-size:20px;font-weight:500;margin-bottom:1.25rem;color:#1a1a18}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+.header{background:linear-gradient(135deg,#1e3a5f 0%,#0f2744 50%,#1a1042 100%);padding:1.5rem 2rem 1.2rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+.header h1{font-size:22px;font-weight:600;color:#fff;letter-spacing:-.3px}
+.header p{font-size:13px;color:#94a3b8;margin-top:3px}
+.body{padding:1.5rem 2rem}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
-.tab{padding:6px 14px;border-radius:8px;border:1px solid #c8c6bc;background:#fff;cursor:pointer;font-size:13px;color:#5f5e5a;transition:all .15s}
-.tab.active{background:#e6f1fb;color:#185fa5;border-color:#85b7eb;font-weight:500}
-.tab:hover:not(.active){background:#f1efe8}
+.tab{padding:7px 15px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);cursor:pointer;font-size:13px;color:#94a3b8;transition:all .15s}
+.tab.active{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border-color:#3b82f6;font-weight:500;box-shadow:0 2px 12px rgba(37,99,235,0.4)}
+.tab:hover:not(.active){background:rgba(255,255,255,0.1);color:#e2e8f0}
 .page{display:none}.page.active{display:block}
-.section-title{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#5f5e5a;margin:1.2rem 0 .5rem;padding-left:4px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.5rem}
-.metric{background:#f1efe8;border-radius:8px;padding:12px 14px}
-.metric-label{font-size:12px;color:#5f5e5a;margin-bottom:4px}
-.metric-value{font-size:20px;font-weight:500;color:#1a1a18}
-.metric-value.green{color:#3b6d11}
-.metric-value.red{color:#a32d2d}
-.card{background:#fff;border:1px solid #d3d1c7;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;overflow-x:auto}
+.section-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#64748b;margin:1.4rem 0 .6rem;padding-left:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:1.5rem}
+.metric{background:rgba(30,58,95,0.5);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px 16px}
+.metric-label{font-size:12px;color:#64748b;margin-bottom:6px;font-weight:500}
+.metric-value{font-size:22px;font-weight:600;color:#e2e8f0}
+.metric-value.green{color:#34d399}
+.metric-value.red{color:#f87171}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:12px}
-th{background:#f1efe8;color:#5f5e5a;padding:6px 8px;text-align:right;font-weight:500;border-bottom:1px solid #d3d1c7;white-space:nowrap}
+th{background:rgba(255,255,255,0.06);color:#64748b;padding:7px 8px;text-align:right;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.08);white-space:nowrap;font-size:11px;letter-spacing:.03em}
 th:first-child{text-align:left;min-width:150px}
-td{padding:4px 6px;text-align:right;border-bottom:1px solid #eee;color:#1a1a18;white-space:nowrap}
-td:first-child{text-align:left;color:#5f5e5a;min-width:150px}
-tr.total td{font-weight:600;background:#f1efe8;color:#1a1a18}
-tr.total td:first-child{color:#1a1a18}
-.cell-input{width:72px;text-align:right;background:#fff;border:1px solid #c8c6bc;border-radius:4px;font-size:12px;color:#185fa5;font-family:inherit;padding:3px 5px;display:block}
-.cell-input:focus{outline:none;border-color:#85b7eb;background:#e6f1fb}
+td{padding:5px 8px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.05);color:#cbd5e1;white-space:nowrap}
+td:first-child{text-align:left;color:#94a3b8;min-width:150px}
+tr:hover td{background:rgba(255,255,255,0.03)}
+tr.total td{font-weight:600;background:rgba(37,99,235,0.12);color:#e2e8f0;border-top:1px solid rgba(37,99,235,0.3)}
+tr.total td:first-child{color:#93c5fd}
+.cell-input{width:76px;text-align:right;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:5px;font-size:12px;color:#60a5fa;font-family:inherit;padding:3px 6px;display:block;transition:all .15s}
+.cell-input:focus{outline:none;border-color:#3b82f6;background:rgba(59,130,246,0.15);color:#93c5fd}
+.cell-input::placeholder{color:#334155}
 .resumo-table{width:100%;border-collapse:collapse;font-size:13px}
-.resumo-table th{background:#f1efe8;padding:8px 12px;text-align:right;font-weight:500;color:#5f5e5a;border-bottom:1px solid #d3d1c7}
+.resumo-table th{background:rgba(255,255,255,0.06);padding:10px 14px;text-align:right;font-weight:600;color:#64748b;border-bottom:1px solid rgba(255,255,255,0.08);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
 .resumo-table th:first-child{text-align:left}
-.resumo-table td{padding:8px 12px;text-align:right;border-bottom:1px solid #eee;color:#1a1a18}
-.resumo-table td:first-child{text-align:left;font-weight:500}
-.resumo-table tr.total td{font-weight:600;background:#f1efe8}
-.badge{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:500}
-.badge.pos{background:#eaf3de;color:#3b6d11}
-.badge.neg{background:#fcebeb;color:#a32d2d}
-.badge.zero{background:#faeeda;color:#854f0b}
-@media(max-width:600px){th:first-child,td:first-child{min-width:100px}.cell-input{width:58px}}
+.resumo-table td{padding:10px 14px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.05);color:#cbd5e1}
+.resumo-table td:first-child{text-align:left;font-weight:500;color:#e2e8f0}
+.resumo-table tr:hover td{background:rgba(255,255,255,0.03)}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge.pos{background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.25)}
+.badge.neg{background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.25)}
+.badge.zero{background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid rgba(251,191,36,0.25)}
+@media(max-width:600px){.body{padding:1rem}.header{padding:1rem 1rem .8rem}th:first-child,td:first-child{min-width:100px}.cell-input{width:58px}}
 </style>
 </head>
 <body>
-<h1>Controlo Bancário</h1>
+<div class="header">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+    <div>
+      <h1>💳 Controlo Bancário</h1>
+      <p>Gestão de contas — Moçambique</p>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:11px;color:#64748b;letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-bottom:3px">CEO</div>
+      <div style="font-size:16px;font-weight:600;color:#fff">Abel Francisco</div>
+    </div>
+  </div>
+</div>
+<div class="body">
 <div class="tabs" id="tabs"></div>
 <div id="pages"></div>
+</div>
 
 <script>
 const MONTHS=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
@@ -54,20 +72,18 @@ const BANKS=['BIM (Millennium)','Millennium BIM 2','Moza Banco','BCI','Standard 
 const ENTRADA_ROWS=['Depósito em Dinheiro','Transferência Recebida','Outros Rendimentos'];
 const SAIDA_ROWS=['Levantamento em Dinheiro','Transferência Enviada','Pagamento de Serviços','Outras Despesas'];
 
-// state[bankIdx][section][rowIdx][monthIdx]
 const state = BANKS.map(() => ({
   entradas: ENTRADA_ROWS.map(() => Array(12).fill(0)),
   saidas:   SAIDA_ROWS.map(()   => Array(12).fill(0))
 }));
 
-// Seed initial values
-state[0].entradas[0][0] = 10000; // BIM Jan depósito
-state[2].entradas[1][0] = 5000;  // Moza Banco Jan transf
-state[3].entradas[1][0] = 30000; // BCI Jan transf
+state[0].entradas[0][0] = 10000;
+state[2].entradas[1][0] = 5000;
+state[3].entradas[1][0] = 30000;
 
 function fmt(n) {
   if (!n || n === 0) return '-';
-  return n.toLocaleString('pt-MZ', {minimumFractionDigits:0, maximumFractionDigits:0});
+  return n.toLocaleString('pt-PT', {minimumFractionDigits:2, maximumFractionDigits:2});
 }
 
 function sumEntradas(bi, mi) { return state[bi].entradas.reduce((s,r) => s + r[mi], 0); }
@@ -83,7 +99,6 @@ function buildMonthTable(bi, sec, rows) {
   let h = `<table><thead><tr><th>Descrição</th>`;
   MONTHS.forEach(m => h += `<th>${m}</th>`);
   h += `<th>Total</th></tr></thead><tbody>`;
-
   rows.forEach((row, ri) => {
     h += `<tr><td>${row}</td>`;
     MONTHS.forEach((_, mi) => {
@@ -93,7 +108,6 @@ function buildMonthTable(bi, sec, rows) {
     });
     h += `<td id="rt_${bi}_${sec}_${ri}">-</td></tr>`;
   });
-
   h += `<tr class="total"><td>TOTAL</td>`;
   MONTHS.forEach((_, mi) => h += `<td id="ct_${bi}_${sec}_${mi}">-</td>`);
   h += `<td id="gt_${bi}_${sec}">-</td></tr></tbody></table>`;
@@ -127,13 +141,11 @@ function buildResumoPage() {
   BANKS.forEach((b, bi) => {
     h += `<tr><td>${b}</td><td id="re_${bi}">-</td><td id="rs_${bi}">-</td><td id="rsf_${bi}">-</td><td id="rest_${bi}">-</td></tr>`;
   });
-
   h += `</tbody></table></div>`;
   return h;
 }
 
 function refreshBank(bi) {
-  // Row totals
   ['entradas','saidas'].forEach(sec => {
     const rows = sec === 'entradas' ? ENTRADA_ROWS : SAIDA_ROWS;
     rows.forEach((_, ri) => {
@@ -166,10 +178,8 @@ function refreshBank(bi) {
 }
 
 function refreshResumo() {
-  let grandE=0, grandS=0, grandSF=0;
   BANKS.forEach((_, bi) => {
     const te=totalEntradasBank(bi), ts=totalSaidasBank(bi), sf=saldoFinalTotal(bi);
-    grandE+=te; grandS+=ts; grandSF+=sf;
     const el_e=document.getElementById(`re_${bi}`);
     const el_s=document.getElementById(`rs_${bi}`);
     const el_sf=document.getElementById(`rsf_${bi}`);
@@ -182,10 +192,8 @@ function refreshResumo() {
       : sf<0 ? '<span class="badge neg">❌ Negativo</span>'
       : '<span class="badge zero">⚠️ Zero</span>';
   });
-
 }
 
-// Build DOM
 const tabsEl = document.getElementById('tabs');
 const pagesEl = document.getElementById('pages');
 let thtml = `<button class="tab active" onclick="switchTab('resumo',this)">Resumo Geral</button>`;
@@ -197,7 +205,6 @@ BANKS.forEach((b, bi) => {
 tabsEl.innerHTML = thtml;
 pagesEl.innerHTML = phtml;
 
-// Attach input listeners after DOM is built
 BANKS.forEach((_, bi) => {
   ['entradas','saidas'].forEach(sec => {
     const rows = sec === 'entradas' ? ENTRADA_ROWS : SAIDA_ROWS;
@@ -206,7 +213,14 @@ BANKS.forEach((_, bi) => {
         const el = document.getElementById(makeId(bi, sec, ri, mi));
         if (!el) return;
         el.addEventListener('input', function() {
-          const v = parseFloat(this.value.replace(/[^\d.-]/g,'')) || 0;
+          const raw = this.value.trim();
+          let v = 0;
+          if (raw) {
+            let s = raw;
+            if (s.includes('.') && s.includes(',')) s = s.replace(/\./g,'').replace(',','.');
+            else if (s.includes(',')) s = s.replace(',','.');
+            v = parseFloat(s) || 0;
+          }
           state[bi][sec][ri][mi] = v;
           refreshBank(bi);
           refreshResumo();
@@ -217,7 +231,6 @@ BANKS.forEach((_, bi) => {
   });
 });
 
-// Initial render
 BANKS.forEach((_, bi) => refreshBank(bi));
 refreshResumo();
 
