@@ -45,6 +45,12 @@ tr.total td:first-child{color:#93c5fd}
 .badge.pos{background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.25)}
 .badge.neg{background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.25)}
 .badge.zero{background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid rgba(251,191,36,0.25)}
+.save-bar{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem}
+.btn-save{padding:9px 24px;border-radius:8px;border:none;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:.02em}
+.btn-save:hover{background:linear-gradient(135deg,#15803d,#166534);transform:translateY(-1px);box-shadow:0 4px 14px rgba(22,163,74,0.4)}
+.btn-save:active{transform:translateY(0)}
+.save-msg{font-size:13px;color:#34d399;font-weight:500;opacity:0;transition:opacity .3s}
+.save-msg.show{opacity:1}
 @media(max-width:600px){.body{padding:1rem}.header{padding:1rem 1rem .8rem}th:first-child,td:first-child{min-width:100px}.cell-input{width:58px}}
 </style>
 </head>
@@ -77,13 +83,18 @@ const state = BANKS.map(() => ({
   saidas:   SAIDA_ROWS.map(()   => Array(12).fill(0))
 }));
 
-state[1].entradas[0][0] = 10000;
-state[4].entradas[1][0] = 5000;
-state[0].entradas[1][0] = 30000;
-
 function fmt(n) {
   if (!n || n === 0) return '-';
   return n.toLocaleString('pt-PT', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+function parseInput(val) {
+  val = val.trim();
+  if (!val) return 0;
+  let s = val;
+  if (s.includes('.') && s.includes(',')) s = s.replace(/\./g,'').replace(',','.');
+  else if (s.includes(',')) s = s.replace(',','.');
+  return parseFloat(s) || 0;
 }
 
 function sumEntradas(bi, mi) { return state[bi].entradas.reduce((s,r) => s + r[mi], 0); }
@@ -116,6 +127,10 @@ function buildMonthTable(bi, sec, rows) {
 
 function buildBankPage(bi) {
   return `
+  <div class="save-bar">
+    <button class="btn-save" onclick="salvar(${bi})">💾 Salvar</button>
+    <span class="save-msg" id="savemsg_${bi}">✅ Dados guardados com sucesso!</span>
+  </div>
   <div class="grid">
     <div class="metric"><div class="metric-label">Total Entradas</div><div class="metric-value green" id="me_${bi}">-</div></div>
     <div class="metric"><div class="metric-label">Total Saídas</div><div class="metric-value red" id="ms_${bi}">-</div></div>
@@ -143,6 +158,17 @@ function buildResumoPage() {
   });
   h += `</tbody></table></div>`;
   return h;
+}
+
+function salvar(bi) {
+  try {
+    localStorage.setItem('banco_state', JSON.stringify(state));
+  } catch(e) {}
+  const msg = document.getElementById(`savemsg_${bi}`);
+  if (msg) {
+    msg.classList.add('show');
+    setTimeout(() => msg.classList.remove('show'), 2500);
+  }
 }
 
 function refreshBank(bi) {
@@ -213,15 +239,7 @@ BANKS.forEach((_, bi) => {
         const el = document.getElementById(makeId(bi, sec, ri, mi));
         if (!el) return;
         el.addEventListener('input', function() {
-          const raw = this.value.trim();
-          let v = 0;
-          if (raw) {
-            let s = raw;
-            if (s.includes('.') && s.includes(',')) s = s.replace(/\./g,'').replace(',','.');
-            else if (s.includes(',')) s = s.replace(',','.');
-            v = parseFloat(s) || 0;
-          }
-          state[bi][sec][ri][mi] = v;
+          state[bi][sec][ri][mi] = parseInput(this.value);
           refreshBank(bi);
           refreshResumo();
         });
@@ -230,6 +248,37 @@ BANKS.forEach((_, bi) => {
     });
   });
 });
+
+// Load saved state if available
+try {
+  const saved = localStorage.getItem('banco_state');
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    BANKS.forEach((_, bi) => {
+      if (parsed[bi]) {
+        ENTRADA_ROWS.forEach((_, ri) => {
+          if (parsed[bi].entradas[ri]) state[bi].entradas[ri] = parsed[bi].entradas[ri];
+        });
+        SAIDA_ROWS.forEach((_, ri) => {
+          if (parsed[bi].saidas[ri]) state[bi].saidas[ri] = parsed[bi].saidas[ri];
+        });
+      }
+    });
+    // Restore input values
+    BANKS.forEach((_, bi) => {
+      ['entradas','saidas'].forEach(sec => {
+        const rows = sec === 'entradas' ? ENTRADA_ROWS : SAIDA_ROWS;
+        rows.forEach((_, ri) => {
+          MONTHS.forEach((_, mi) => {
+            const el = document.getElementById(makeId(bi, sec, ri, mi));
+            const v = state[bi][sec][ri][mi];
+            if (el && v) el.value = v;
+          });
+        });
+      });
+    });
+  }
+} catch(e) {}
 
 BANKS.forEach((_, bi) => refreshBank(bi));
 refreshResumo();
